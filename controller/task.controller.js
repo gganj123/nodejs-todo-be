@@ -29,7 +29,7 @@ taskController.updateTask = async (req, res) => {
       throw new Error("task not found");
     }
     const box = Object.keys(req.body);
-    box.map((i) => (task[map] = req.body[i]));
+    box.map((i) => (task[i] = req.body[i]));
     await task.save();
     res.status(200).json({ status: "ok", data: task });
   } catch (err) {
@@ -39,7 +39,7 @@ taskController.updateTask = async (req, res) => {
 
 taskController.deleteTask = async (req, res) => {
   try {
-    const task = await Task.findById(req.params.id);
+    const task = await Task.findByIdAndDelete(req.params.id);
     res.status(200).json({ status: "ok", data: task });
   } catch (err) {
     res.status(400).json({ status: "fail", error: err });
