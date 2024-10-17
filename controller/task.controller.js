@@ -22,12 +22,28 @@ taskController.getTask = async (req, res) => {
   }
 };
 
-taskController.putTask = async (req, res) => {
+taskController.updateTask = async (req, res) => {
   try {
-    const { task, isComplete } = req.body;
-    const newTask = new Task({ task, isComplete });
-    const taskList = await Task.find({});
-  } catch (err) {}
+    const task = await Task.findById(req.params.id);
+    if (!task) {
+      throw new Error("task not found");
+    }
+    const box = Object.keys(req.body);
+    box.map((i) => (task[map] = req.body[i]));
+    await task.save();
+    res.status(200).json({ status: "ok", data: task });
+  } catch (err) {
+    res.status(400).json({ status: "fail", error: err });
+  }
+};
+
+taskController.deleteTask = async (req, res) => {
+  try {
+    const task = await Task.findById(req.params.id);
+    res.status(200).json({ status: "ok", data: task });
+  } catch (err) {
+    res.status(400).json({ status: "fail", error: err });
+  }
 };
 
 module.exports = taskController;
