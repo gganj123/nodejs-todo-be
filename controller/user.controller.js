@@ -22,4 +22,18 @@ userController.createUser = async (req, res) => {
   }
 };
 
+userController.loginWithEmail = async (req, res) => {
+  try {
+    const { email, password } = req.body;
+    const user = await User.findOne({ email });
+    if (user) {
+      //유저가 적은 password 는 그대로의 password
+      //user.password => 암호화된 패스워드... 그래서 직접 비교는 안된다!
+      const isMatch = bcrypt.compareSync(password, hash);
+      if (isMatch) {
+      }
+    }
+  } catch (err) {}
+};
+
 module.exports = userController;
