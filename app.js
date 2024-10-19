@@ -9,7 +9,6 @@ const app = express();
 const MONGODB_URI_PROD = process.env.MONGODB_URI_PROD;
 console.log("mongo", MONGODB_URI_PROD);
 
-
 app.use(bodyParser.json());
 app.use(cors());
 app.use("/api", indexRouter);
@@ -24,6 +23,7 @@ mongoose
     console.log("DB connection fail", err);
   });
 
-app.listen(5000, () => {
-  console.log("server on 5000");
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
 });
