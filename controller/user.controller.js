@@ -1,5 +1,6 @@
 const User = require("../model/User");
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 const saltRounds = 10;
 
 const userController = {};
@@ -29,11 +30,16 @@ userController.loginWithEmail = async (req, res) => {
     if (user) {
       //유저가 적은 password 는 그대로의 password
       //user.password => 암호화된 패스워드... 그래서 직접 비교는 안된다!
-      const isMatch = bcrypt.compareSync(password, hash);
+      const isMatch = bcrypt.compareSync(password, user.password);
       if (isMatch) {
+        const token = user.generateToken();
+        return res.status(200).json({ status: "success", user, token });
       }
     }
-  } catch (err) {}
+    throw new Error("아이디 또는 비밀번호가 일치하지 않습니다");
+  } catch (err) {
+    res.status(400).json({ status: "fail", err: err.message });
+  }
 };
 
 module.exports = userController;
