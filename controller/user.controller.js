@@ -18,8 +18,8 @@ userController.createUser = async (req, res) => {
     const newUser = new User({ email, name, password: hash });
     await newUser.save();
     res.status(200).json({ status: "success" });
-  } catch (err) {
-    res.status(400).json({ status: "fail", err: err.message });
+  } catch (error) {
+    res.status(400).json({ status: "fail", error: error.message });
   }
 };
 
@@ -37,8 +37,8 @@ userController.loginWithEmail = async (req, res) => {
       }
     }
     throw new Error("아이디 또는 비밀번호가 일치하지 않습니다");
-  } catch (err) {
-    res.status(400).json({ status: "fail", err: err.message });
+  } catch (error) {
+    res.status(400).json({ status: "fail", error: error.message });
   }
 };
 
