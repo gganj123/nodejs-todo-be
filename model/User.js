@@ -28,7 +28,7 @@ userSchema.methods.toJSON = function () {
   return obj;
 };
 
-userSchema.methods.generateToken = async function () {
+userSchema.methods.generateToken = function () {
   const token = jwt.sign({ _id: this._id }, JWT_SECRET_KEY);
   return token;
 };
