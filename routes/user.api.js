@@ -6,5 +6,5 @@ const authController = require("../controller/auth.controller");
 //회원가입 endpoint
 router.post("/", userController.createUser);
 router.post("/login", userController.loginWithEmail);
-router.get("/me", authController.authenticate);
+router.get("/me", authController.authenticate, userController.getUser);
 module.exports = router;
